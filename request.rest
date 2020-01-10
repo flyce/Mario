@@ -1,0 +1,19 @@
+### This file is used for API testing
+
+### user login account method
+POST http://127.0.0.1:3000/v1/user/login
+Content-Type: application/json
+
+{
+    "account": "mail@flyce.cn",
+    "password": "123a456",
+    "type": 101
+}
+
+### Token verify
+POST http://127.0.0.1:3000/v1/user/tokenVerify
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3ODY3MDc5MCwiZXhwIjoxNTgxMjYyNzkwfQ.JeMwYU7t8uyW4hkDDNqw7zgePZTGetYHQOp9iV5qzuA"
+}
