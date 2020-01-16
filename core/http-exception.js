@@ -62,6 +62,15 @@ class LoginMethodError extends HttpException {
     }
 }
 
+class UploadError extends HttpException {
+    constructor(msg, errorCode) {
+        super();
+        this.code = 403;
+        this.msg = msg || '上传错误';
+        this.errorCode = errorCode || 10005;
+    }
+}
+
 module.exports = {
     HttpException,
     ParameterException,
@@ -69,5 +78,6 @@ module.exports = {
     NotFound,
     AuthFailed,
     Forbbiden,
-    LoginMethodError
+    LoginMethodError,
+    UploadError
 }

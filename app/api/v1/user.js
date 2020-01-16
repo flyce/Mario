@@ -20,14 +20,14 @@ router.post('/register', async (ctx) => {
         email: v.get('body.email'),
         password: v.get('body.password'),
         username: v.get('body.username')
-    }
+    };
     await User.create(user);
     success();
 });
 
 router.post('/login', async (ctx) => {
     const v = await new TokenValidator().validate(ctx);
-    let token
+    let token;
 
     switch (v.get('body.type')) {
         case LoginType.USER_EMAIL:
@@ -55,7 +55,7 @@ router.post('/tokenVerify', async (ctx) => {
 
 router.post('/file', async ctx => {
     ctx.body = ctx.req.file;
-})
+});
 
 router.post('/update', async ctx => {});
 

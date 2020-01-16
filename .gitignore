@@ -23,5 +23,4 @@ yarn-error.log*
 /config/env.js
 
 # dev file
-/upload
-/static
+/resources
