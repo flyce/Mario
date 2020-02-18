@@ -2,11 +2,23 @@
 @hostname = 127.0.0.1
 @port = 3000
 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsInNjb3BlIjo4LCJpYXQiOjE1ODIwNDk5ODMsImV4cCI6MTU4MjEzNjM4M30.MK7fsCHLarKgEqAqOGRpyOUeH-wOhAMKBOJTKf0qIxQ
+
 ### get /
 GET http://{{hostname}}:{{port}}/
 
 ### get /v1/
 GET http://{{hostname}}:{{port}}/v1/
+
+### register
+POST http://127.0.0.1:3000/v1/user/register
+Content-Type: application/json
+
+{
+    "email": "mail@flyce.cn",
+    "password": "123a456",
+    "username": "Echo"
+}
 
 ### user login account method
 POST http://127.0.0.1:3000/v1/user/login
@@ -26,7 +38,45 @@ Content-Type: application/json
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU3OTA5NzU0MSwiZXhwIjoxNTc5MTA0NzQxfQ.jCWu5Y1SNOfC_qECBz92xUf4DH4xcc51fev8rlibxeQ"
 }
 
-###
+### upload file
 POST http://{{hostname}}:{{port}}/v1/file
 Content-Type: application/json
+
+
+### get demo list
+GET http://127.0.0.1:3000/v1/demo
+
+
+### create demo data
+POST http://127.0.0.1:3000/v1/demo
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "username": "Echo",
+    "email": "im@flyce.cn",
+    "postData": "test1"
+}
+
+
+### update demo data
+POST http://127.0.0.1:3000/v1/demo/update
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "id": 1,
+    "username": "Echo",
+    "email": "im@flyce.cn",
+    "postData": "test0"
+}
+
+### delete demo data
+POST http://127.0.0.1:3000/v1/demo/delete
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "id": 2
+}
 

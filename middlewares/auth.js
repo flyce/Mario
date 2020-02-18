@@ -14,33 +14,32 @@ class Auth {
             let errMsg = "Token 不合法";
             let userInfo;
             if(!userToken) {
-                throw new global.errs.Forbbiden(errMsg);
+                throw new global.errs.Forbidden(errMsg);
             }
             try {
-                userInfo = jwt.verify(userToken, global.config.security.secretKey);
+                userInfo = jwt.verify(userToken, global.config.security.accessToken.secretKey);
             } catch (error) {
                 // token 不合法 已过期
                 if(error.name == "TokenExpiredError") {
                     errMsg = "TOKEN 已过期";
                 }
-                throw new global.errs.Forbbiden(errMsg);
+                throw new global.errs.Forbidden(errMsg);
             }
 
             // 用scope的数值进行分级控制 数值越大 权限越高
             if(userInfo.scope < this.level) {
-                throw new global.errs.Forbbiden('权限不足');
+                throw new global.errs.Forbidden('权限不足');
             }
 
             ctx.auth = {
                 uid: userInfo.uid,
-                scope: userInfo.scope 
-            }
+                scope: userInfo.scope
+            };
             await next();
         }
     }
 
     static verifyToken(token) {
-        console.log(global.config.security.accessToken.secretKey);
         try {
             jwt.verify(token, global.config.security.accessToken.secretKey);
             return true;

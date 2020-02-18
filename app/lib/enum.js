@@ -12,6 +12,6 @@ const LoginType = {
     USER_EMAIL: 101,
     ADMIN_EMAIL: 200,
     isThisType
-}
+};
 
-module.exports = { LoginType }
+module.exports = { LoginType };

@@ -87,9 +87,25 @@ class NotEmptyValidator extends Validator {
     } 
 }
 
+class DemoValidator extends Validator {
+    constructor() {
+        super();
+        this.username = [
+            new Rule('isLength', '至少4位数', { min: 4 })
+        ];
+        this.email = [
+            new Rule('isEmail', '不符合Email地址规范', )
+        ];
+        this.postData = [
+            new Rule('isLength', '至少4位数', { min: 4 })
+        ]
+    }
+}
+
 module.exports = {
     PositiveIntegerValidator,
     RegisterValidator,
     TokenValidator,
-    NotEmptyValidator
-}
+    NotEmptyValidator,
+    DemoValidator
+};

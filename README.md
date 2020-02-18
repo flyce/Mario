@@ -17,5 +17,6 @@ Modify  `config/env.js` to your own configuration
 
 ### generate secretKey
 
-`require('crypto').randomBytes(64).toString('hex')`
+`require('crypto').randomBytes(64).toString('hex')` 
+ 
 [![Run on Repl.it](https://repl.it/badge/github/flyce/Mario)](https://repl.it/github/flyce/Mario)
