@@ -6,9 +6,9 @@
 
 `npm i`
 
-`### 0x02 Modify configuration
+### 0x02 Modify configuration
 
-`mv config/env.bac.js config/env.js`
+`mv config/env.bac.js config/env.js`  
 Modify  `config/env.js` to your own configuration
 
 ### 0x03 start server

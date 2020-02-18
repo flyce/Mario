@@ -21,11 +21,11 @@ const sequelize = new Sequelize(dbName, user, password, {
             }
         }
     }
-})
+});
 
 sequelize.sync({
     force: false
-})
+});
 
 // json 序列化
 Model.prototype.toJSON = function () {

@@ -1,5 +1,6 @@
 const requireDirectory = require('require-directory');
 const Router = require('koa-router');
+const r = require('./router-config');
 
 class InitManager {
     static initCore(app) {
@@ -8,6 +9,7 @@ class InitManager {
         InitManager.initLoadRouters(app);
         InitManager.loadHttpExecption(); // 全局导入异常处理类
         InitManager.loadConfig();
+        app.use(r.routes());
     }
 
     // 导入的路由必须以moudle.exports = router的形式导出
