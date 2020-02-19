@@ -2,7 +2,7 @@ const Router = require('koa-router');
 
 const { DemoValidator } = require('../../validators/validator');
 const { Demo } = require('../../models/demo');
-const { BaseRouter } = require('../../lib/baseRouter');
+const { BaseRouter } = require('../../lib/base-router');
 
 const router = new Router({
     prefix: '/v1/demo'
