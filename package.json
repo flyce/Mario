@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "prod": "pm2 start app.js --name catcus",
-    "plant": "pm2 start core/schedule.js --name schedule",
+    "plan": "pm2 start core/schedule.js --name schedule",
     "stop": "pm2 stop all",
     "test": "mocha  --harmony"
   },
