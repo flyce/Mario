@@ -122,12 +122,13 @@ module.exports = {
 }
 ```
 下面对各个参数进行说明:  
-key  | description | value
-- | - | -
-parentPath | 用户自定义的路由 | 
-path ｜ 用户自定义的自路由，需要以`/`开头 | 
-method | 服务器接受的请求类型 | `POST` `GET`
-validator|  针对此路由的数据验证器，需在app/validators下创建，此处以字符串的形式填写验证器的名字，框架会自动加载 | 
-params | 需要保存的字段，类型是`Array`，如不定义，用户提交的数据会全部丢弃；此处需要以驼峰命名的方式编写，框架在保存时会自动转化成下划线命名的方式 | 
-model | 用户创建的模型，填写字符串，框架自动加载 | 
-operate | 处理模型的操作 | `find` `create` `delete` `update`
+
+| key  | description | value |
+| --- | --- | --- |
+| parentPath | 用户自定义的路由 | 
+| path | 用户自定义的自路由，需要以`/`开头 | |
+| method | 服务器接受的请求类型 | `POST` `GET` |
+| validator|  针对此路由的数据验证器，需在app/validators下创建，此处以字符串的形式填写验证器的名字，框架会自动加载 | |
+| params | 需要保存的字段，类型是`Array`，如不定义，用户提交的数据会全部丢弃；此处需要以驼峰命名的方式编写，框架在保存时会自动转化成下划线命名的方式 | 
+| model | 用户创建的模型，填写字符串，框架自动加载 | 
+| operate | 处理模型的操作 | `find` `create` `delete` `update`
