@@ -15,17 +15,17 @@ const catchError = async (ctx, next) => {
                 msg: error.msg,
                 errorCode: error.errorCode,
                 request: `${ctx.method} ${ctx.path}`
-            }
+            };
             ctx.status = error.code;
         } else {
             ctx.body = {
                 msg: 'we made a mistake.',
                 errorCode: 0,
                 request: `${ctx.method} ${ctx.path}`
-            }
+            };
             ctx.status = 500;
         }
     }
-}
+};
 
 module.exports = catchError;

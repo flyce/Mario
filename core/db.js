@@ -40,8 +40,8 @@ Model.prototype.toJSON = function () {
         })
     }
     return data;
-}
+};
 
 module.exports = {
     sequelize
-}
+};

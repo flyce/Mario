@@ -18,4 +18,8 @@ router.get('/v1/', ctx => {
     };
 });
 
+router.get('/v1/error', ctx => {
+    throw new Error();
+});
+
 module.exports = router;

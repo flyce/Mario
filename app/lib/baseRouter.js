@@ -1,5 +1,5 @@
-const { Auth } = require('../middlewares/auth');
-const { PositiveIntegerValidator } = require('../app/validators/validator');
+const { Auth } = require('../../middlewares/auth');
+const { PositiveIntegerValidator } = require('../validators/validator');
 
 const parsingParams = async (ctx, validator = PositiveIntegerValidator, params = ['id']) => {
     const v = await new validator().validate(ctx);
@@ -16,7 +16,7 @@ const success = () => {
     throw new global.errs.Success();
 };
 
-class Base {
+class BaseRouter {
     router;
     model;
     validator;
@@ -83,5 +83,5 @@ class Base {
 }
 
 module.exports = {
-    Base
+    BaseRouter
 };

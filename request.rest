@@ -80,3 +80,39 @@ authorization: {{token}}
     "id": 2
 }
 
+### get demo data
+GET http://127.0.0.1:3000/v1/config/
+Content-Type: application/json
+authorization: {{token}}
+
+### create demo data
+POST http://127.0.0.1:3000/v1/config/
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "username": "paco",
+    "email": "paco@flyce.cn",
+    "postData": "1234"
+}
+
+### update demo data
+POST http://127.0.0.1:3000/v1/config/update
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "id": 3,
+    "username": "paco",
+    "email": "paco@flyce.cn",
+    "postData": "1234"
+}
+
+### delete demo data
+POST http://127.0.0.1:3000/v1/config/delete
+Content-Type: application/json
+authorization: {{token}}
+
+{
+    "id": 3
+}
