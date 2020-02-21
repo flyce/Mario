@@ -79,7 +79,7 @@ cactus
 ```
 利用配置式路由，我们可以很简单的将此条数据插入到数据库。  
 在`app/api/v1`下创建一个文件`favor.js`
-```
+```javascript
 const configRouter = {
     "v1/favor": [
         {
