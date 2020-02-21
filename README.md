@@ -155,8 +155,77 @@ Connection: close
 | path | 用户自定义的子路由，需要以`/`开头 | |
 | method | 服务器接受的请求类型 | `POST` `GET` |
 | validator|  针对此路由的数据验证器，需在app/validators下创建，此处以字符串的形式填写验证器的名字，框架会自动加载 | |
-| params | 需要保存的字段，类型是`Array`，如不定义，用户提交的数据会全部丢弃；此处需要以驼峰命名的方式编写，框架在保存时会自动转化成下划线命名的方式 | 
+| params | 需要保存的字段，类型是`Array`，如不定义，用户提交的数据会全部丢弃；此处需要以驼峰命名的方式编写，框架在保存时会自动转化成下划线命名的方式；uid为保留字段，即使用户传了uid，此处也会从Auth中间件获取 | 
 | model | 用户创建的模型，填写字符串，框架自动加载 | 
 | operate | 处理模型的操作 | `find` `create` `delete` `update`
 
-## 继续更新中...
+## 正常路由的使用
+在一个正常的项目中，显然配置式路由是无法满足业务需求的。  
+比如用户登录，校验完成后，我们不能把用户的所有信息返回给用户，配置式路由就无法实现业务需求，别担心，直接使用`koa-router`即可。  
+在`app/api/v1`下创建`user.js`，内容如下:
+```javascript
+const Router = require('koa-router');
+
+const { RegisterValidator, TokenValidator, NotEmptyValidator } = require('../../validators/validator');
+const { User } = require('../../models/user');
+const { success } = require('../../lib/helper');
+const { LoginType } = require('../../lib/enum');
+const { Auth } = require('../../../middlewares/auth');
+const { generateToken } = require('../../../core/util');
+const { WXManager } = require('../../services/wx');
+
+const router = new Router({
+    prefix: '/v1/user'
+});
+
+router.post('/register', async (ctx) => {
+    // 参数 email uasename pasword
+    const v = await new RegisterValidator().validate(ctx);
+  
+    const user = {
+        email: v.get('body.email'),
+        password: v.get('body.password'),
+        username: v.get('body.username')
+    };
+    await User.create(user);
+    success();
+});
+
+router.post('/login', async (ctx) => {
+    const v = await new TokenValidator().validate(ctx);
+    let token;
+
+    switch (v.get('body.type')) {
+        case LoginType.USER_EMAIL:
+            token = await emailLogin(v.get('body.account'), v.get('body.password'));
+            break;
+        case LoginType.USER_MINI_PROGRAM: 
+            token = await WXManager.codeToToken(v.get('body.account'));
+            break;
+        default: 
+            throw new global.errs.ParameterException('没有相应的处理函数')
+    }
+
+    ctx.body = {
+        token
+    }
+});
+
+router.post('/tokenVerify', async (ctx) => {
+    const v = await new NotEmptyValidator().validate(ctx)
+    const result = Auth.verifyToken(v.get('body.token'))
+    ctx.body = {
+        isValid: result
+    }
+});
+
+async function emailLogin(account, secret) {
+    const user = await User.verifyEmailPassword(account, secret);
+    return generateToken(user.id, Auth.USER);
+}
+
+module.exports = router;
+```
+需要注意的是，基于`koa-router`实现路由自动加载的条件时，导出的是实例化的`Router`。
+
+## 持续编写中...

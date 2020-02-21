@@ -106,8 +106,12 @@ class ConfigRouter {
         for (let param of params) {
             // 驼峰命名方式转下划线方式，以写入数据库
             const name = param.replace(/([A-Z])/g, "_$1").toLowerCase();
-            info[name] = v.get(`body.${param}`);
+            if(name === uid ) {
+                info[name] = ctx.auth.uid;
+            } else {
+                info[name] = v.get(`body.${param}`);
             }
+        }
         return info;
     };
 }
