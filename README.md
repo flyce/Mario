@@ -157,7 +157,7 @@ Connection: close
 | validator|  针对此路由的数据验证器，需在app/validators下创建，此处以字符串的形式填写验证器的名字，框架会自动加载 | |
 | params | 需要保存的字段，类型是`Array`，如不定义，用户提交的数据会全部丢弃；此处需要以驼峰命名的方式编写，框架在保存时会自动转化成下划线命名的方式；uid为保留字段，即使用户传了uid，此处也会从Auth中间件获取 | 
 | model | 用户创建的模型，填写字符串，框架自动加载 | 
-| operate | 处理模型的操作 | `find` `create` `delete` `update`
+| operate | 处理模型的操作 | `find` `findOne` `create` `delete` `update`
 
 ## 正常路由的使用
 在一个正常的项目中，显然配置式路由是无法满足业务需求的。  

@@ -62,10 +62,14 @@ class ConfigRouter {
 
     get() {
         this.router.get(this.path, async ctx => {
-            if(this.operate.toLowerCase() !== 'find') {
-                throw new Error(`路由 ${this.path} 操作错误，仅允许使用find`);
+            if(this.operate.toLowerCase() === 'find') {
+                ctx.body = await this._findAll();
+            } else if (this.operate.toLowerCase() !== 'findone') {
+                throw new Error(`路由 ${this.path} 操作错误，仅允许使用find和findOne`);
+            } else {
+                const pathParams = await this._parsingParams(ctx, this.validator, this.params, 'path');
+                ctx.body = await this._findOne(pathParams);
             }
-            ctx.body = await this._findAll();
         });
     }
 
@@ -74,7 +78,7 @@ class ConfigRouter {
     }
 
     async _delete(data) {
-        const res = await this._findOne(data.id);
+        const res = await this._findOne({id: data.id});
         await res.destroy();
     }
 
@@ -88,11 +92,9 @@ class ConfigRouter {
         return await this.model.findAll();
     }
 
-    async _findOne(id) {
+    async _findOne(params) {
         const res = await this.model.findOne({
-            where: {
-                id
-            }
+            where: params
         });
         if(!res) {
             throw new global.errs.NotFound('查不到该记录');
@@ -100,17 +102,13 @@ class ConfigRouter {
         return res;
     }
 
-    async _parsingParams (ctx, validator, params)  {
+    async _parsingParams (ctx, validator, params, paramsFrom = "body")  {
         const v = await new this.validator().validate(ctx);
         const info = {};
         for (let param of params) {
             // 驼峰命名方式转下划线方式，以写入数据库
             const name = param.replace(/([A-Z])/g, "_$1").toLowerCase();
-            if(name === uid ) {
-                info[name] = ctx.auth.uid;
-            } else {
-                info[name] = v.get(`body.${param}`);
-            }
+            info[name] = v.get(`${paramsFrom}.${param}`);
         }
         return info;
     };
@@ -133,4 +131,3 @@ const models = loadDependence(model);
 module.exports = {
     loadConfigRouter
 };
-
